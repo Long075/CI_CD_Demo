@@ -1,15 +1,13 @@
 import { test, expect } from '@playwright/test';
 
-test('User CRUD flow testing', async ({ request }) => {
-    //Thêm một user
-    const getRes = await request.get('https://ca01e50c30cf83e7e6dd.free.beeceptor.com/api/users/', {
-        data: {
-            username: 'uia1',
-            password: 'abc123',
-            color: 'red'
-        }
+const token = process.env.API_TOKEN;
+console.log(token);
+
+test('API GET Request', async ({request}) => {
+    const response = await request.get(`http://118.70.81.203:8010/api/users/C1442FA0-99D3-11F0-8D36-198242D8A96B`, {
+        headers: {Authorization: `Bearer ${token}`}
     });
-    const body = await getRes.json();
+    expect(response.status()).toBe(200);
+    const body = await response.json();
     console.log(body);
-    expect(getRes.status()).toBe(200);
 })
