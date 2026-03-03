@@ -3,6 +3,8 @@ import fs from 'fs';
 
 async function globalSetup() {
   const context = await request.newContext();
+  console.log(process.env.API_USERNAME)
+  console.log(process.env.API_PASSWORD);
   const res = await context.post('http://118.70.81.203:8010/api/login', {
     data: {
       username: process.env.API_USERNAME,
