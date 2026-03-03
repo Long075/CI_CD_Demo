@@ -1,14 +1,15 @@
 import { test, expect } from '@playwright/test';
+import fs from 'fs';
 
-const token = process.env.API_TOKEN;
+const tokenData = JSON.parse(fs.readFileSync('token.json', 'utf-8'));
+const token = tokenData.token;
 const baseURL = process.env.BASE_URL;
-console.log(token);
 
 test('API GET Request', async ({request}) => {
-    const response = await request.get(`${baseURL}/api/users/C1442FA0-99D3-11F0-8D36-198242D8A96B`, {
+    const response = await request.get(`${baseURL}/api/users/D876CEF0-A44E-11F0-9EBC-01783AC294FB`, {
         headers: {Authorization: `Bearer ${token}`}
     });
     expect(response.status()).toBe(200);
     const body = await response.json();
-    console.log(body);
+    expect(body.status).toBe("success");
 })
