@@ -23,8 +23,8 @@ jobs:
       run: npx playwright test
       env:
         BASE_URL: ${{ secrets.BASE_URL }}
-        APP_USERNAME: ${{ secrets.API_USERNAME }}
-        APP_PASSWORD: ${{ secrets.API_PASSWORD }}
+        API_USERNAME: ${{ secrets.API_USERNAME }}
+        API_PASSWORD: ${{ secrets.API_PASSWORD }}
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
