@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import fs from 'fs';
+import { request } from 'http';
 
 const tokenData = JSON.parse(fs.readFileSync('token.json', 'utf-8'));
 const token = tokenData.token;
@@ -12,4 +13,10 @@ test('@smoke API GET Request', async ({request}) => {
     expect(response.status()).toBe(200);
     const body = await response.json();
     expect(body.status).toBe("success");
+})
+
+test('@ThuNghiem Flaky Example', async({request}) => { //Flaky là chạy lúc lỗi, lúc pass
+    const random = Math.random();
+    console.log('Random value:', random);
+    expect(random).toBeGreaterThan(0.3);
 })
