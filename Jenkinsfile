@@ -2,8 +2,8 @@ pipeline {
     parameters {
         choice(
             name: 'ENV',
-            choices: ['POSVN', 'Nothing'],
-            description: 'Chọn đường link'
+            choices: ['chromium', 'firefox'],
+            description: 'chọn môi trường chạy'
         )
     }
 
@@ -14,13 +14,12 @@ pipeline {
     }
 
     environment {
-        BASE_URL = "${params.ENV == 'production' ? 'https://prod.com' : 'https://staging.com'}"
+        BASE_URL = credentials('BASE_URL')
         API_USERNAME = credentials('API_USERNAME')
         API_PASSWORD = credentials('API_PASSWORD')
     }
 
     stages {
-
         stage('Checkout') {
             steps {
                 git branch: 'main',
@@ -38,6 +37,19 @@ pipeline {
         stage('Run Tests') {
             steps {
                 bat 'npm run test:ci'
+            }
+        }
+        
+        parallel{
+            stage('Chrome') {
+                steps {
+                    bat 'npx playwright test --project=chromium'
+                }
+            }
+            stage('Firefox') {
+                steps {
+                    bat 'npx playwright test --project=firefox'
+                }
             }
         }
     }
