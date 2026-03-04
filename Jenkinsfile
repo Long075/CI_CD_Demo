@@ -39,24 +39,27 @@ pipeline {
                 bat 'npm run test:ci'
             }
         }
-        
-        parallel{
-            stage('Chrome') {
-                steps {
-                    bat 'npx playwright test --project=chromium'
+
+        stage('Run Parallel'){
+            parallel{
+                stage('Chrome') {
+                    steps {
+                        bat 'npx playwright test --project=chromium'
+                    }
+                }
+                stage('Firefox') {
+                    steps {
+                        bat 'npx playwright test --project=firefox'
+                    }
                 }
             }
-            stage('Firefox') {
-                steps {
-                    bat 'npx playwright test --project=firefox'
-                }
-            }
-        }
+        }     
     }
 
     post {
         always {
             publishHTML([
+                allowMissing: false,
                 reportDir: 'playwright-report',
                 reportFiles: 'index.html',
                 reportName: 'Playwright Report',
