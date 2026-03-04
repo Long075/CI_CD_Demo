@@ -3,11 +3,18 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "playwright test",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:full": "playwright test --grep-invert @smoke --reporter=html",
+    "test:ci": "playwright test --reporter=html",
+    "install:browsers": "playwright install"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
+  
   "devDependencies": {
     "@playwright/test": "^1.57.0",
     "@types/node": "^25.0.8"
