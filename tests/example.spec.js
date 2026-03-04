@@ -15,7 +15,7 @@ test('@smoke API GET Request', async ({request}) => {
     expect(body.status).toBe("success");
 })
 
-test('@ThuNghiem Flaky Example', async({request}) => { //Flaky là chạy lúc lỗi, lúc pass
+test('@Flaky Flaky Example', async({request}) => { //Flaky là chạy lúc lỗi, lúc pass
     const random = Math.random();
     console.log('Random value:', random);
     expect(random).toBeGreaterThan(0.3);
